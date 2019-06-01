@@ -54,7 +54,7 @@ public List<Card> getCards () {
 }
 
 public void clearHand() {
-	cards = null;
+	cards = new ArrayList<>();
 	System.out.println("Hand cleared.");
 }
 

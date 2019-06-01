@@ -40,7 +40,7 @@ public Card dealCard () {
 
 public void shuffleCards () {
 	Collections.shuffle(cards);
-	System.out.println("*shuffle* *shuffle*");
+	System.out.println("*shuffle* *shuffle*\n");
 }
 public void printShuffledCards () {
 	Collections.shuffle(cards);
