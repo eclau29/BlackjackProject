@@ -12,27 +12,53 @@ public class Dealer {
 	private Card cards;
 	private Hand hand;
 	
+	public Deck getDeck() {
+		return deck;
+	}
+
+	public void setDeck(Deck deck) {
+		this.deck = deck;
+	}
+
+	public Card getCards() {
+		return cards;
+	}
+
+	public void setCards(Card cards) {
+		this.cards = cards;
+	}
+
+	public Hand getHand() {
+		return hand;
+	}
+
+	public void setHand(Hand hand) {
+		this.hand = hand;
+	}
+
 	// constructor
 	public Dealer(Deck deck) {
 		this.deck = deck;
 	}
 	
 	// methods
-public void dealerHand (int qty) {
-	hand.addCard(qty);
+//public void dealerHand (int qty) {
+//	hand.addCard();
 	
-}
-public void dealToPlayer (Scanner kb) {
-		deck.shuffleCards();
+//}
+
+public List<Card> dealToPlayer (Scanner kb) {
+//		deck.shuffleCards();
 		boolean cont = true;
 		int pnumCards;
 		int playerCardValue = 0;
+		List<Card> playerHand = null;
 		
 		System.out.print("How many cards would you like? ");
 		while (cont) {
 			try {
 				pnumCards = kb.nextInt();
-				List<Card> playerHand = new ArrayList<>(pnumCards);
+				playerHand = new ArrayList<Card>();
 				if (pnumCards <= 52) {
 					for (int i = 0; i < pnumCards; i++) {
 						Card playerCard = deck.dealCard();
@@ -42,7 +68,7 @@ public void dealToPlayer (Scanner kb) {
 						
 					}
 					System.out.println(playerCardValue);
-					break;
+					return playerHand;
 					
 				} else if (pnumCards > 52) {
 					System.err.println("That's too many cards, silly! Let's try again.");
@@ -54,5 +80,6 @@ public void dealToPlayer (Scanner kb) {
 			}
 
 		} cont = false;
-	}
+		return playerHand;
+	} 
 }

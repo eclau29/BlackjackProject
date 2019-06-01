@@ -1,5 +1,6 @@
 package com.skilldistillery.blackjack;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class BlackJackApp {
@@ -8,7 +9,6 @@ public class BlackJackApp {
 	Dealer dealer = new Dealer(deck);
 	Hand playerHand = new BlackjackHand();
 	Hand dealerHand = new BlackjackHand();
-	
 
 	public static void main(String[] args) {
 		BlackJackApp blackjack = new BlackJackApp();
@@ -16,51 +16,72 @@ public class BlackJackApp {
 		Deck deck = new Deck();
 		Dealer dealer = new Dealer(deck);
 		Hand playerHand = new BlackjackHand();
-		
+		Hand dealerHand = new BlackjackHand();
+
 		blackjack.run(kb);
-		
+
 		kb.close();
 	}
 
 	private void run(Scanner kb) {
 		System.out.println("Welcome to BlackJack Sim! Hope you're feeling lucky!");
-		int hitOrStay = 0;
+		deck.shuffleCards();
+		int hitOrStay = 1;
+		int playerHandValue = 0;
+		for (int i = 0; i < 2; i++) {
+			playerHand.addCard(dealer.getDeck().dealCard());
+
+			dealerHand.addCard(dealer.getDeck().dealCard());
+		}
+
+		System.out.println("Player: " + playerHand + "(" + playerHand.getHandValue() + ")");
+		System.out.println("Dealer: " + dealerHand.getCards().get(0));
 		do {
-			hitOrStay = 1;
-			dealer.dealToPlayer(kb);
-			playerHand.getHandValue();
 			System.out.println("Would you like to hit or stay? \n1. HIT\n2. Stay ");
-			 hitOrStay = kb.nextInt();
-			 switch (hitOrStay) {
-			 case 1:
-				 dealer.dealToPlayer(kb);
-				 playerHand.getHandValue();
-				 break;
-			 case 2:
-				 System.out.println("You've decided to stay.");
-				 break;
-			 default:
-				 System.out.println("Invalid Entry");
-				 dealer.dealToPlayer(kb);
-				 playerHand.getHandValue();
-			 }
-		} while( hitOrStay == 1);
-			
-		
-		
-		dealer.dealToPlayer(kb);
-		playerHand.getHandValue();
-		dealer.dealerHand(2);
-		dealerHand.getHandValue();
+			hitOrStay = kb.nextInt();
+			if (hitOrStay == 1) {
+				playerHand.addCard(dealer.getDeck().dealCard());
+				System.out.println("Player: " + playerHand + "(" + playerHand.getHandValue() + ")");
+				if (playerHand.getHandValue() > 21) {
+					System.out.println("HA ha YOU LOSE :P");
+					System.exit(0);
+				} if (playerHand.getHandValue() == 21) {
+					System.out.println("Congratulations, you're a winner!");
+				}
+			}
+
+		} while (hitOrStay == 1);
+
+		while (dealerHand.getHandValue() < 17) {
+			dealerHand.addCard(dealer.getDeck().dealCard());
+		}
+//		do {
 		if (playerHand.getHandValue() > 21) {
 			System.out.println("Player loses! *womp womp*");
 			System.out.println("Play again? (Y/N)");
 		} else if (dealerHand.getHandValue() > 21) {
-			System.out.println("Dealer loses! Player wins...");
-		} else if (dealerHand.getHandValue()< 17) {
+			System.out.println("Dealer: " + dealerHand + "(" + dealerHand.getHandValue() + ")");
+			System.out.println("Dealer loses...player wins");
+		} else if (dealerHand.getHandValue() < 17) {
 			while (dealerHand.getHandValue() < 17) {
-			dealer.dealerHand(1);
+				dealerHand.addCard(dealer.getDeck().dealCard());
+			}
+		}else if (dealerHand.getHandValue() > playerHand.getHandValue()) {
+			System.out.println("Dealer: " + dealerHand);
+			System.out.println("Dealer wins! Would you like to play again? (Y/N)");
+			
+		} else if (dealerHand.getHandValue() < playerHand.getHandValue()) {
+			System.out.println("Dealer: " + dealerHand);
+			System.out.println("Player wins! Congratulations, it's your lucky day!");
 		}
-	}
+
+//		if (dealerHand.getHandValue() > playerHand.getHandValue()) {
+//			System.out.println("Dealer wins! Would you like to play again? (Y/N)");
+//		} else if (dealerHand.getHandValue() < playerHand.getHandValue()) {
+//			System.out.println("Player wins! Would you like to play again? (Y/N)");
+//		} else {
+//			System.out.println("It's a draw :O");
+//		}
+
 	}
 }
