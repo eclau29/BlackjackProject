@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Dealer {
 	
 	// fields
-	private Deck deck = new Deck(); // a Deck is a List<Card>;
+	private Deck deck; // a Deck is a List<Card>;
 	private Card cards;
 	private Hand hand;
 	
@@ -37,15 +37,11 @@ public class Dealer {
 	}
 
 	// constructor
-	public Dealer(Deck deck) {
-		this.deck = deck;
+	public Dealer() {
+		this.deck = new Deck();
 	}
 	
-	// methods
-//public void dealerHand (int qty) {
-//	hand.addCard();
 	
-//}
 
 public List<Card> dealToPlayer (Scanner kb) {
 //		deck.shuffleCards();
